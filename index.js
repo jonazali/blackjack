@@ -70,8 +70,26 @@ function checkWin(player, banker) {
   console.log(`Banker Score: ${bankerScore}`);
 }
 
-populateDeck(myDeck);
-dealCards(player, banker);
-console.log(player);
-console.log(banker);
-checkWin(player, banker);
+function printGame(player, banker) {
+  console.log('======================');
+  console.log('  Welcome to 二十一点');
+  console.log('======================\n');
+  console.log(`Dealer's Hand:`);
+  banker.currentCards.forEach(card => {
+    console.log(`{Suit: ${card.suit}, Weight: ${card.weight}}`);
+  });
+  console.log(`\nPlayer's Hand:`);
+  player.currentCards.forEach(card => {
+    console.log(`{Suit: ${card.suit}, Weight: ${card.weight}}`);
+  });
+  console.log('');
+}
+
+function playGame() {
+  populateDeck(myDeck);
+  dealCards(player, banker);
+  printGame(player, banker);
+  checkWin(player, banker);
+}
+
+playGame();
