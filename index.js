@@ -4,18 +4,15 @@ function Card(suit = '', weight = 0) {
   // TODO: Function to getScore()
 }
 
-const myDeck = {
-  // TODO: Populate deck within class
-  cards: []
-};
+const myDeck = [];
 
 // TODO: Player and dealer should be classes
 const player = {
-  currentCards: []
+  currentCards: [],
 };
 
 const dealer = {
-  currentCards: []
+  currentCards: [],
 };
 
 function populateDeck(deck) {
