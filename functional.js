@@ -17,8 +17,20 @@ const suits = ['♠', '♣', '♥', '♦'];
 
 const weights = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11];
 
+/**
+ * Creates a card
+ * @param {string} suit
+ * @param {number} weight
+ * @returns {Object} card - object
+ */
 createCard = (suit, weight) => ({ suit, weight });
 
+/**
+ * Creates a deck of cards
+ * @param {string[]} funcSuits
+ * @param {number[]} funcWeights
+ * @returns {Object[]} deck - array of cards
+ */
 createDeck = (funcSuits, funcWeights) => {
   const deck = [];
   funcSuits.forEach(suit => {
@@ -30,17 +42,34 @@ createDeck = (funcSuits, funcWeights) => {
   return deck;
 };
 
+/**
+ * Shuffles a deck of cards
+ * @param {Object[]} funcDeck
+ * @returns {Object[]} deck - array of cards
+ */
 shuffleDeck = funcDeck => {
   const deck = funcDeck;
   return deck.sort(() => Math.random() - 0.5);
 };
 
+/**
+ * Takes card out of deck
+ * @param {Object[]} funcDeck
+ * @returns {Object[]} deck - array of cards
+ * @returns {Object} card - object
+ */
 dealCard = funcDeck => {
   const deck = funcDeck;
   const card = deck.shift();
   return { deck, card };
 };
 
+/**
+ * Deals cards to player and dealer
+ * @param {Object[]} deck
+ * @returns {Object[]} playerCards - array of cards
+ * @returns {Object[]} dealerCards - array of cards
+ */
 dealCards = deck => {
   let funcDeck = deck;
   let results = dealCard(funcDeck);
@@ -58,9 +87,18 @@ dealCards = deck => {
   return { playerCards, dealerCards };
 };
 
-// TODO: Make a reduce function
+/**
+ * Gets the score of a player or dealer
+ * @param {Object[]} cards
+ * @returns {number} card total weight - number
+ */
 getScores = cards => cards.reduce((acc, cur) => acc + cur.weight, 0);
 
+/**
+ * Displays the results of a player and dealer
+ * @param {Object} player
+ * @param {Object} dealer
+ */
 displayResults = (player, dealer) => {
   console.log('======================');
   console.log('  Welcome to 二十一点');
@@ -86,6 +124,11 @@ displayResults = (player, dealer) => {
   console.log('');
 };
 
+/**
+ * Displays the winner
+ * @param {Object} player
+ * @param {Object} dealer
+ */
 getWinner = (player, dealer) => {
   const dealerScore = dealer.score;
   const playerScore = player.score;
