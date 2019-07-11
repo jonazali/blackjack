@@ -35,22 +35,44 @@ shuffleDeck = funcDeck => {
   return deck.sort(() => Math.random() - 0.5);
 };
 
-dealCards = funcDeck => {
+dealCard = funcDeck => {
   const deck = funcDeck;
-  const hand = deck.shift();
-  return { deck, hand };
+  const card = deck.shift();
+  return { deck, card };
 };
 
-getScores = hand => {
-  let score = 0;
-  hand.forEach(card => (score += card.weight));
-  return score;
+dealCards = deck => {
+  let funcDeck = deck;
+  let results = dealCard(funcDeck);
+  funcDeck = results.deck;
+  let playerCards = results.card;
+  results = dealCard(funcDeck);
+  funcDeck = results.deck;
+  let dealerCards = results.card;
+  results = dealCard(funcDeck);
+  funcDeck = results.deck;
+  playerCards = [playerCards, results.card];
+  results = dealCard(funcDeck);
+  funcDeck = results.deck;
+  dealerCards = [dealerCards, results.card];
+  return { playerCards, dealerCards };
 };
+
+// TODO: Make a reduce function
+getScores = cards => cards.reduce((acc, cur) => acc + cur.weight, 0);
 
 displayResults = (player, dealer) => {
   console.log('======================');
   console.log('  Welcome to 二十一点');
   console.log('======================\n');
+  console.log(
+    '.------..------..------..------..------.    .------..------..------..------.\n' +
+      '|B.--. ||L.--. ||A.--. ||C.--. ||K.--. |    |J.--. ||A.--. ||C.--. ||K.--. |\n' +
+      '| :(): || :/ : || (  ) || :/ : || :/ : |    | :(): || (  ) || :/ : || :/ : |\n' +
+      '| ()() || (__) || :  : || :  : || :  : |    | ()() || :  : || :  : || :  : |\n' +
+      "| '--'B|| '--'L|| '--'A|| '--'C|| '--'K|    | '--'J|| '--'A|| '--'C|| '--'K|\n" +
+      "`------'`------'`------'`------'`------'    `------'`------'`------'`------'\n"
+  );
   console.log(`Dealer's Hand:`);
   dealer.cards.forEach(card => {
     console.log(`{Suit: ${card.suit}, Weight: ${card.weight}}`);
@@ -88,18 +110,9 @@ const deck = createDeck(suits, weights);
 let shuffledDeck = shuffleDeck(deck);
 
 // Deal Cards
-let results = dealCards(shuffledDeck);
-shuffledDeck = results.deck;
-Player.cards = results.hand;
-results = dealCards(shuffledDeck);
-shuffledDeck = results.deck;
-Dealer.cards = results.hand;
-results = dealCards(shuffledDeck);
-shuffledDeck = results.deck;
-Player.cards = [Player.cards, results.hand];
-results = dealCards(shuffledDeck);
-shuffledDeck = results.deck;
-Dealer.cards = [Dealer.cards, results.hand];
+const dealtCards = dealCards(shuffledDeck);
+Player.cards = dealtCards.playerCards;
+Dealer.cards = dealtCards.dealerCards;
 
 // Get Scores
 Player.score = getScores(Player.cards);
