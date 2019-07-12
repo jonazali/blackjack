@@ -94,6 +94,7 @@ dealCards = deck => {
  */
 getScores = cards => cards.reduce((acc, cur) => acc + cur.weight, 0);
 
+// TODO: Console Logs make this not a pure function
 /**
  * Displays the results of a player and dealer
  * @param {Object} player
@@ -124,6 +125,7 @@ displayResults = (player, dealer) => {
   console.log('');
 };
 
+// TODO: Get rid of console logs to make this a pure function
 /**
  * Displays the winner
  * @param {Object} player
